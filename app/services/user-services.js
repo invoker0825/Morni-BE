@@ -42,6 +42,14 @@ console.log('1111111111111111111111111111111111111111111')
     subject: `Test`,
     text: `This is test email`
   };
+  
+  let callback = (error) => {
+    if (!error) {
+      console.log(error);
+    } else {
+      console.log("Sent Email Successfully.");
+    }
+  };
 
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
