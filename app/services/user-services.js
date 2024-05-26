@@ -92,7 +92,7 @@ console.log('1111111111111111111111111111111111111111111')
   
   var callback = function(error, data, response) {
     if (error) {
-      console.error(error);
+      console.log('-------------------', error);
     } else {
       console.log('API called successfully.');
     }
