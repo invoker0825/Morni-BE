@@ -35,7 +35,7 @@ exports.login = (req, res) => {
   // validateRequest(req);
   // const token = crypto.randomBytes(32).toString('hex');
   // console.log('-----------------', token)
-
+console.log('1111111111111111111111111111111111111111111')
   const mailOptions = {
     from: 'meshemali08@gmail.com',
     to: 'Topfullstacker@gmail.com',
@@ -45,47 +45,50 @@ exports.login = (req, res) => {
 
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      console.log(error);
+      console.log('22222222222222222222222222222222222222222222')
+      res.status(500).send({ message: error });
     } else {
+      console.log('22222222222222222222222222222222222222222222')
       console.log('Email sent: ' + info.response);
+      res.status(200).send({ message: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa' });
     }
     transporter.close();
     callback(error)
   });
 
-  User.findOne({
-    where: {
-      email: req.body.email
-    }
-  })
-  .then(user => {
-    if (!user) {
-      return res.status(404).send({ 
-          message: "User not found" });
-    }
+  // User.findOne({
+  //   where: {
+  //     email: req.body.email
+  //   }
+  // })
+  // .then(user => {
+  //   if (!user) {
+  //     return res.status(404).send({ 
+  //         message: "User not found" });
+  //   }
 
-    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-    if (!passwordIsValid) {
-        return res.status(401).send({
-            accessToken: null,
-            message: "Invalid password!"
-        });
-    }
+  //   var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+  //   if (!passwordIsValid) {
+  //       return res.status(401).send({
+  //           accessToken: null,
+  //           message: "Invalid password!"
+  //       });
+  //   }
 
-    var token = jwt.sign({ id: user.id }, configuration.secret, {
-      expiresIn: 86400
-    });
+  //   var token = jwt.sign({ id: user.id }, configuration.secret, {
+  //     expiresIn: 86400
+  //   });
 
-    user.then(
-      res.status(200).send({
-        id: user.id,
-        email: user.email,
-        accessToken: token
-      }))
-    })
-    .catch(err => {
-      res.status(500).send({ message: err.message });
-    });
+  //   user.then(
+  //     res.status(200).send({
+  //       id: user.id,
+  //       email: user.email,
+  //       accessToken: token
+  //     }))
+  //   })
+  //   .catch(err => {
+  //     res.status(500).send({ message: err.message });
+  //   });
 };
 
 exports.resetPassword = (req, res) => {
