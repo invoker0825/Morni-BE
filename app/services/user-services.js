@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const ElasticEmail = require('@elasticemail/elasticemail-client');
 const User = database.user;
+const axios = require('axios');
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
@@ -67,44 +68,28 @@ console.log('1111111111111111111111111111111111111111111')
   // });
   /////////////////////////////////////////////////////////////////////
 
-  const client = ElasticEmail.ApiClient.instance;
-  const apikey = client.authentications['apikey'];
-  apikey.apiKey = "11F62B33BC7A0392952BFF1A2B514E7E0589";
-  
-  const emailsApi = new ElasticEmail.EmailsApi();
-  
-  const emailData = {
-    Recipients: {
-        To: ["Topfullstacker@gmail.com"]
-    },
-    Content: {
-        Body: [
-            {
-                ContentType: "HTML",
-                Charset: "utf-8",
-                Content: "Mail content."
-            },
-            {
-                ContentType: "PlainText",
-                Charset: "utf-8",
-                Content: "Mail content."
-            }
-        ],
-        From: "meshemali08@gmail.com",
-        Subject: "Example transactional email"
-    }
+  const requestData = {
+    from: 'from@noreply.com',
+    to: 'Topfullstacker@gmail.com',
+    subject: 'Test Email',
+    bodyText: 'This is a test email sent using the Elastic Email API.'
   };
 
-  
-  const callback = (error, data, response) => {
-    if (error) {
-        console.log('------------------------', error);
-    } else {
-        console.log('API called successfully.');
-        console.log('Email sent.');
-    }
-};
-emailsApi.emailsTransactionalPost(emailData, callback);
+  axios({
+    method: 'post',
+    url: 'https://api.elasticemail.com/v2/email/send',
+    auth: {
+      username: 'meshemali08@gmail.com',
+      password: 'meshemali08@gmail.com'
+    },
+    data: requestData
+  })
+  .then(response => {
+    console.log('Email sent successfully:', response.data);
+  })
+  .catch(error => {
+    console.error('Error sending email:---------', error);
+  });
 
   // User.findOne({
   //   where: {
