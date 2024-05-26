@@ -43,7 +43,7 @@ console.log('1111111111111111111111111111111111111111111')
     from: 'meshemali08@gmail.com',
     to: 'adever789@gmail.com',
     subject: `Test`,
-    text: `This is test email`
+    text: `Your verification code is \n ${Math.floor(Math.random()*903192)}`
   };
   
   transporter.sendMail(mailOptions, (error, info) => {
