@@ -53,7 +53,7 @@ console.log('1111111111111111111111111111111111111111111')
 
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      console.log('22222222222222222222222222222222222222222222')
+      console.log('22222222222222222222222222222222222222222222', error)
       res.status(500).send({ message: error });
     } else {
       console.log('22222222222222222222222222222222222222222222')
