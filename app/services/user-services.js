@@ -71,7 +71,7 @@ console.log('1111111111111111111111111111111111111111111')
   const apikey = client.authentications['apikey'];
   apikey.apiKey = "11F62B33BC7A0392952BFF1A2B514E7E0589";
   
-  const templatesApi = new ElasticEmail.TemplatesApi();
+  const emailsApi = new ElasticEmail.EmailsApi();
   
   const emailData = {
     Recipients: {
@@ -104,7 +104,7 @@ console.log('1111111111111111111111111111111111111111111')
         console.log('Email sent.');
     }
 };
-templatesApi.emailsTransactionalPost(emailData, callback);
+emailsApi.emailsTransactionalPost(emailData, callback);
 
   // User.findOne({
   //   where: {
