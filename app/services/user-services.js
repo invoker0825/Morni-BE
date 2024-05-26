@@ -67,37 +67,44 @@ console.log('1111111111111111111111111111111111111111111')
   // });
   /////////////////////////////////////////////////////////////////////
 
-  let defaultClient = ElasticEmail.ApiClient.instance;
- 
-  let apikey = defaultClient.authentications['apikey'];
-  apikey.apiKey = "11F62B33BC7A0392952BFF1A2B514E7E0589"
+  const client = ElasticEmail.ApiClient.instance;
+  const apikey = client.authentications['apikey'];
+  apikey.apiKey = "11F62B33BC7A0392952BFF1A2B514E7E0589";
   
-  let api = new ElasticEmail.EmailsApi()
+  const templatesApi = new ElasticEmail.TemplatesApi();
   
-  let email = ElasticEmail.EmailMessageData.constructFromObject({
-    Recipients: [
-      new ElasticEmail.EmailRecipient("Topfullstacker@gmail.com")
-    ],
+  const emailData = {
+    Recipients: {
+        To: ["Topfullstacker@gmail.com"]
+    },
     Content: {
-      Body: [
-        ElasticEmail.BodyPart.constructFromObject({
-          ContentType: "HTML",
-          Content: "My test email content ;)"
-        })
-      ],
-      Subject: "JS EE lib test",
-      From: "test@noreply.com"
-    }
-  });
-  
-  var callback = function(error, data, response) {
-    if (error) {
-      console.log('-------------------', error);
-    } else {
-      console.log('API called successfully.');
+        Body: [
+            {
+                ContentType: "HTML",
+                Charset: "utf-8",
+                Content: "Mail content."
+            },
+            {
+                ContentType: "PlainText",
+                Charset: "utf-8",
+                Content: "Mail content."
+            }
+        ],
+        From: "meshemali08@gmail.com",
+        Subject: "Example transactional email"
     }
   };
-  api.emailsPost(email, callback);
+
+  
+  const callback = (error, data, response) => {
+    if (error) {
+        console.log('------------------------', error);
+    } else {
+        console.log('API called successfully.');
+        console.log('Email sent.');
+    }
+};
+templatesApi.emailsTransactionalPost(emailData, callback);
 
   // User.findOne({
   //   where: {
