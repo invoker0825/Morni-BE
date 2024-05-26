@@ -32,9 +32,9 @@ exports.register = (req, res) => {
 };
 
 exports.login = (req, res) => {
-  validateRequest(req);
-  const token = crypto.randomBytes(32).toString('hex');
-  console.log('-----------------', token)
+  // validateRequest(req);
+  // const token = crypto.randomBytes(32).toString('hex');
+  // console.log('-----------------', token)
 
   const mailOptions = {
     from: 'meshemali08@gmail.com',
