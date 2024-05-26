@@ -14,8 +14,8 @@ let transporter = nodemailer.createTransport({
   port: 2525,
   secure: false, // set to true for port 465, false for other ports
   auth: {
-    user: 'Topfullstacker@gmail.com',
-    pass: '34E836FBAB896A096F7C6BBD8B05924D5B70'
+    user: 'meshemali08@gmail.com',
+    pass: '11F62B33BC7A0392952BFF1A2B514E7E0589'
   }
 });
 
@@ -40,7 +40,7 @@ exports.login = (req, res) => {
 console.log('1111111111111111111111111111111111111111111')
 ////////////////////////////////////////////////////////////
   const mailOptions = {
-    from: 'Topfullstacker@gmail.com',
+    from: 'meshemali08@gmail.com',
     to: 'adever789@gmail.com',
     subject: `Test`,
     text: `This is test email`
