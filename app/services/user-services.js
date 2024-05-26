@@ -2,6 +2,7 @@ const database = require("../models");
 const configuration = require("../config/config-jwt.js");
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const ElasticEmail = require('@elasticemail/elasticemail-client');
 const User = database.user;
 
 var jwt = require("jsonwebtoken");
@@ -36,33 +37,67 @@ exports.login = (req, res) => {
   // const token = crypto.randomBytes(32).toString('hex');
   // console.log('-----------------', token)
 console.log('1111111111111111111111111111111111111111111')
-  const mailOptions = {
-    from: 'meshemali08@gmail.com',
-    to: 'Topfullstacker@gmail.com',
-    subject: `Test`,
-    text: `This is test email`
-  };
+////////////////////////////////////////////////////////////
+  // const mailOptions = {
+  //   from: 'meshemali08@gmail.com',
+  //   to: 'Topfullstacker@gmail.com',
+  //   subject: `Test`,
+  //   text: `This is test email`
+  // };
   
-  let callback = (error) => {
-    if (!error) {
-      console.log(error);
+  // let callback = (error) => {
+  //   if (!error) {
+  //     console.log(error);
+  //   } else {
+  //     console.log("Sent Email Successfully.");
+  //   }
+  // };
+
+  // transporter.sendMail(mailOptions, function (error, info) {
+  //   if (error) {
+  //     console.log('22222222222222222222222222222222222222222222', error)
+  //     res.status(500).send({ message: error });
+  //   } else {
+  //     console.log('22222222222222222222222222222222222222222222')
+  //     console.log('Email sent: ' + info.response);
+  //     res.status(200).send({ message: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa' });
+  //   }
+  //   transporter.close();
+  //   callback(error)
+  // });
+  /////////////////////////////////////////////////////////////////////
+
+  let defaultClient = ElasticEmail.ApiClient.instance;
+ 
+  let apikey = defaultClient.authentications['apikey'];
+  apikey.apiKey = "11F62B33BC7A0392952BFF1A2B514E7E0589"
+  
+  let api = new ElasticEmail.EmailsApi()
+  
+  let email = ElasticEmail.EmailMessageData.constructFromObject({
+    Recipients: [
+      new ElasticEmail.EmailRecipient("Topfullstacker@gmail.com")
+    ],
+    Content: {
+      Body: [
+        ElasticEmail.BodyPart.constructFromObject({
+          ContentType: "HTML",
+          Content: "My test email content ;)"
+        })
+      ],
+      Subject: "JS EE lib test",
+      From: "test@noreply.com"
+    }
+  });
+  
+  var callback = function(error, data, response) {
+    if (error) {
+      console.error(error);
     } else {
-      console.log("Sent Email Successfully.");
+      console.log('API called successfully.');
     }
   };
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log('22222222222222222222222222222222222222222222', error)
-      res.status(500).send({ message: error });
-    } else {
-      console.log('22222222222222222222222222222222222222222222')
-      console.log('Email sent: ' + info.response);
-      res.status(200).send({ message: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa' });
-    }
-    transporter.close();
-    callback(error)
-  });
+  api.emailsPost(email, callback);
 
   // User.findOne({
   //   where: {
