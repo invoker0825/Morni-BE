@@ -12,10 +12,10 @@ var bcrypt = require("bcryptjs");
 let transporter = nodemailer.createTransport({
   host: 'smtp.elasticemail.com',
   port: 2525,
-  secure: true,
+  secure: false, // set to true for port 465, false for other ports
   auth: {
-    user: 'meshemali08@gmail.com',
-    pass: 'meshemali08@gmail.com'
+    user: 'Topfullstacker@gmail.com',
+    pass: '34E836FBAB896A096F7C6BBD8B05924D5B70'
   }
 });
 
@@ -39,57 +39,22 @@ exports.login = (req, res) => {
   // console.log('-----------------', token)
 console.log('1111111111111111111111111111111111111111111')
 ////////////////////////////////////////////////////////////
-  // const mailOptions = {
-  //   from: 'meshemali08@gmail.com',
-  //   to: 'Topfullstacker@gmail.com',
-  //   subject: `Test`,
-  //   text: `This is test email`
-  // };
+  const mailOptions = {
+    from: 'Topfullstacker@gmail.com',
+    to: 'adever789@gmail.com',
+    subject: `Test`,
+    text: `This is test email`
+  };
   
-  // let callback = (error) => {
-  //   if (!error) {
-  //     console.log(error);
-  //   } else {
-  //     console.log("Sent Email Successfully.");
-  //   }
-  // };
-
-  // transporter.sendMail(mailOptions, function (error, info) {
-  //   if (error) {
-  //     console.log('22222222222222222222222222222222222222222222', error)
-  //     res.status(500).send({ message: error });
-  //   } else {
-  //     console.log('22222222222222222222222222222222222222222222')
-  //     console.log('Email sent: ' + info.response);
-  //     res.status(200).send({ message: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa' });
-  //   }
-  //   transporter.close();
-  //   callback(error)
-  // });
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('Error occurred:-------------', error.message);
+      return;
+    }
+    console.log('Message sent:==============', info.messageId);
+  });
   /////////////////////////////////////////////////////////////////////
 
-  const requestData = {
-    from: 'from@noreply.com',
-    to: 'Topfullstacker@gmail.com',
-    subject: 'Test Email',
-    bodyText: 'This is a test email sent using the Elastic Email API.'
-  };
-
-  axios({
-    method: 'post',
-    url: 'https://api.elasticemail.com/v2/email/send',
-    auth: {
-      username: 'meshemali08@gmail.com',
-      password: 'meshemali08@gmail.com'
-    },
-    data: requestData
-  })
-  .then(response => {
-    console.log('Email sent successfully:', response.data);
-  })
-  .catch(error => {
-    console.error('Error sending email:---------', error);
-  });
 
   // User.findOne({
   //   where: {
