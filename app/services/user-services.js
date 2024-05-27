@@ -1,10 +1,9 @@
 const database = require("../models");
 const configuration = require("../config/config-jwt.js");
 const crypto = require('crypto');
-const nodemailer = require('nodemailer');
-const ElasticEmail = require('@elasticemail/elasticemail-client');
 const User = database.user;
-const axios = require('axios');
+const nodemailer = require('nodemailer');
+const client = require('twilio')('AC102b5f8710eb643457144884282a305a', '32653e903296300981193fb3d3dc5947');
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
@@ -39,21 +38,29 @@ exports.login = (req, res) => {
   // console.log('-----------------', token)
 console.log('1111111111111111111111111111111111111111111')
 ////////////////////////////////////////////////////////////
-  const mailOptions = {
-    from: 'meshemali08@gmail.com',
-    to: 'adever789@gmail.com',
-    subject: `Test`,
-    text: `Your verification code is \n ${Math.floor(Math.random()*903192)}`
-  };
+  // const mailOptions = {
+  //   from: 'meshemali08@gmail.com',
+  //   to: 'adever789@gmail.com',
+  //   subject: `Test`,
+  //   text: `Your verification code is \n ${Math.floor(Math.random()*903192)}`
+  // };
   
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log('Error occurred:-------------', error.message);
-      return;
-    }
-    console.log('Message sent:==============', info.messageId);
-  });
+  // transporter.sendMail(mailOptions, (error, info) => {
+  //   if (error) {
+  //     console.log('Error occurred:-------------', error.message);
+  //     return;
+  //   }
+  //   console.log('Message sent:==============', info.messageId);
+  // });
   /////////////////////////////////////////////////////////////////////
+
+  client.messages
+  .create({
+     body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+     from: '+447903571930',
+     to: '+17132346041'
+   })
+  .then(message => console.log(message.sid));
 
 
   // User.findOne({
